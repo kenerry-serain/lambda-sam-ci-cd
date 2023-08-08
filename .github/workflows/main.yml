@@ -46,6 +46,7 @@ jobs:
       - name: Deploying SAM 
         run: |
             sam deploy \
+              --resolve-s3 \
               --template-file .aws-sam/build/template.yaml \
               --stack-name sam-app \
               --capabilities CAPABILITY_IAM \
