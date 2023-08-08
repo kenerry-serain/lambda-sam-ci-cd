@@ -18,6 +18,11 @@ export const handler = async (event: APIGatewayProxyEvent): Promise<APIGatewayPr
                 name: 'Kenerry Serain',
                 email: 'kenerryserain@aws.com',
                 username: 'kenerry',
+            },
+            {
+                name: 'Kenerry Serain',
+                email: 'kenerryserain@aws.com',
+                username: 'kenerry',
             }]),
         };
     } catch (err) {
