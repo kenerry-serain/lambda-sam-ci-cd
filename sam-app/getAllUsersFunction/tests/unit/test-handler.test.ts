@@ -57,9 +57,11 @@ describe('Unit test for app handler', function () {
 
         expect(result.statusCode).toEqual(200);
         expect(result.body).toEqual(
-            JSON.stringify({
-                message: 'hello world',
-            }),
+            JSON.stringify([{
+                name: 'Kenerry Serain',
+                email: 'kenerryserain@aws.com',
+                username: 'kenerry',
+            }]),
         );
     });
 });
