@@ -1,0 +1,51 @@
+name: Deploy Lambda with SAM
+
+on:
+  push:
+    branches: [ main ]
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Installing Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - uses: aws-actions/setup-sam@v2
+        with:
+          use-installer: true
+
+      - working-directory: ./sam-app/getAllUsersFunction
+        run: npm ci
+
+      - working-directory: ./sam-app/getAllUsersFunction
+        run: npm run test
+
+      - name: Configuring AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          role-to-assume: ${{vars.DEPLOYMENT_ROLE}}
+          aws-region: ${{vars.DEPLOYMENT_REGION}}
+
+      - name: Building SAM 
+        run: sam build --template ./sam-app/template.yaml
+
+      - name: Deploying SAM 
+        run: sam deploy \
+              --template-file .aws-sam/build/template.yaml \
+              --stack-name sam-app \
+              --capabilities CAPABILITY_IAM \
+              --region ${{vars.DEPLOYMENT_REGION}}
