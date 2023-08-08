@@ -61,6 +61,11 @@ describe('Unit test for app handler', function () {
                 name: 'Kenerry Serain',
                 email: 'kenerryserain@aws.com',
                 username: 'kenerry',
+            },
+            {
+                name: 'Kenerry Serain',
+                email: 'kenerryserain@aws.com',
+                username: 'kenerry',
             }]),
         );
     });
